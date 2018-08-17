@@ -1,0 +1,10 @@
+/**
+* @Author: zhangji
+* @Date: 2017-09-22 15:33:35
+*/
+
+.ellip {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

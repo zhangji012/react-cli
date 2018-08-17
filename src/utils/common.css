@@ -1,0 +1,53 @@
+/* stylelint-disable */
+
+:global(.ant-cascader-menu-item) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300px;
+}
+:global(.myellipsis) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 400px;
+}
+:global(.ant-select-dropdown-menu-item) {
+  line-height: 18px;
+}
+:global(.ant-cascader-menu-item) {
+  line-height: 18px;
+}
+
+:global(.title) {
+  border-top: 1px solid #aaaaaa;
+  margin-top: 15px;
+  padding: 15px 5px;
+  font-size: 18px;
+  color: #333333;
+  span:nth-of-type(2) {
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #40a9ff;
+    float: right;
+    padding: 2px 40px 0 0;
+    &:hover {
+      color: #1890ff;
+    }
+  }
+  button {
+    float: right;
+  }
+}
+
+:global(.more) {
+  float: right;
+  cursor: pointer;
+  padding: 0 15px;
+  font-size: 15px;
+  &:hover {
+    color: #40a9ff;
+  }
+}
