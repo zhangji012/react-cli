@@ -26,8 +26,7 @@ const model = {
     // 测试 - 数字加1
     onTestAdd(params) {
       this.add(params + 1); // 调用上面reducers中的add方法
-    },
-
+    }
   }
 };
 

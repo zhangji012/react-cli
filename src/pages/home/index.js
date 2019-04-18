@@ -9,6 +9,7 @@ import P from "prop-types";
 /** 所需的各种资源 **/
 import css from "./index.less";
 // import ImgLogo from "../../assets/react-logo.jpg";
+import axios from "axios";
 
 @connect(
   state => ({}),
@@ -26,12 +27,17 @@ export default class HomePageContainer extends React.Component {
     super(props);
     this.state = {};
   }
-
+  componentDidMount() {
+    axios({
+      method: "post",
+      url: "/user/12345",
+      data: {
+        firstName: "Fred",
+        lastName: "Flintstone"
+      }
+    });
+  }
   render() {
-    return (
-      <div>
-        home
-      </div>
-    );
+    return <div className={css.home}>home111111111122222233333</div>;
   }
 }

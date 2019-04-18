@@ -21,7 +21,7 @@ if (env === "production") {
   // 如果是生产环境，则运行build文件夹中的代码
   app.use(express.static("build"));
   app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
+    res.sendFile(path.join(__dirname, "..", "build", "index.html"));
   });
 } else {
   const compiler = webpack(webpackConfig); // 实例化webpack

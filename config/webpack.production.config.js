@@ -18,23 +18,27 @@ const CopyWebpackPlugin = require("copy-webpack-plugin"); // 复制文件用
  * "/" 就是根路径，假如最终项目上线的地址为：https://isluo.com/， 那就可以直接写"/"
  * **/
 const PUBLIC_PATH = "/";
+console.log(11111111111)
+console.log(__dirname)
+
+console.log(path.resolve(__dirname,"..", "src", "index"))
 
 module.exports = {
   mode: "production",
-  entry: ["@babel/polyfill", path.resolve(__dirname, "src", "index")],
+  entry: ["@babel/polyfill", path.resolve(__dirname, "..","src", "index")],
   output: {
-    path: path.resolve(__dirname, "build"), // 将文件打包到此目录下
+    path: path.resolve(__dirname, "..","build"), // 将文件打包到此目录下
     publicPath: PUBLIC_PATH, // 在生成的html中，文件的引入路径会相对于此地址，生成的css中，以及各类图片的URL都会相对于此地址
     filename: "dist/[name].[chunkhash:8].js",
     chunkFilename: "dist/[name].[chunkhash:8].chunk.js"
   },
-  context: __dirname,
+  context: path.resolve(__dirname, ".."),
   module: {
     rules: [
       {
         // .js .jsx用babel解析
         test: /\.js?$/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, "..","src"),
         use: ["babel-loader"]
       },
       {
@@ -71,7 +75,7 @@ module.exports = {
             "less-loader"
           ]
         }),
-        include: path.resolve(__dirname, "src")
+        include: path.resolve(__dirname, "..","src")
       },
       {
         // .less 解析 (用于解析antd的LESS文件)
@@ -84,18 +88,18 @@ module.exports = {
             { loader: "less-loader", options: { javascriptEnabled: true } }
           ]
         }),
-        include: path.resolve(__dirname, "node_modules")
+        include: path.resolve(__dirname, "..","node_modules")
       },
       {
         // 文件解析
         test: /\.(eot|woff|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, "..","src"),
         use: ["file-loader?name=dist/assets/[name].[ext]"]
       },
       {
         // 图片解析
         test: /\.(png|jpg|gif)$/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, "..","src"),
         use: ["url-loader?limit=8192&name=dist/assets/[name].[ext]"]
       },
       {
@@ -194,7 +198,7 @@ module.exports = {
      * 这么做是为了以后各种设备上的扩展功能，比如PWA桌面图标
      * **/
     new FaviconsWebpackPlugin({
-      logo: "./public/favicon.png",
+      logo: path.resolve(__dirname, "..","public/favicon.png"),
       prefix: "icons/",
       icons: {
         appleIcon: true, // 目前只生成苹果的，其他平台都用苹果的图标
@@ -207,7 +211,7 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx", ".less", ".css"], //后缀名自动补全
     alias: {
-      "@": path.resolve(__dirname, "src")
+      "@": path.resolve(__dirname, "..","src")
     }
   }
 };

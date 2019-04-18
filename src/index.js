@@ -9,7 +9,7 @@ import MainRouter from "./router";
 import "./styles/css.css";
 import "./styles/less.less";
 
-ReactDOM.render(<MainRouter/>, document.getElementById("app-root"));
+ReactDOM.render(<MainRouter />, document.getElementById("app-root"));
 
 registerServiceWorker();
 

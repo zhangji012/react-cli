@@ -3,7 +3,7 @@
   height: 100vh;
   min-width: 1280px;
   .sidebar {
-    background: #FFF;
+    background: #fff;
     height: 100vh;
     position: absolute;
     box-shadow: 1px 0 2px rgba(0, 21, 41, 0.35);
@@ -15,8 +15,10 @@
     }
     &:global(.ant-layout-sider-collapsed) {
       .menu > :global(.ant-menu-vertical) {
-        > :global(.ant-menu-item), > :global(.ant-menu-submenu) > :global(.ant-menu-submenu-title) {
-          > a > span, > span > span {
+        > :global(.ant-menu-item),
+        > :global(.ant-menu-submenu) > :global(.ant-menu-submenu-title) {
+          > a > span,
+          > span > span {
             display: none;
           }
           padding: 0 22px;
@@ -53,7 +55,7 @@
   cursor: pointer;
   padding-left: 12px;
   overflow: hidden;
-  background: #FFF;
+  background: #fff;
   img {
     border-radius: 50%;
     width: 40px;
@@ -73,13 +75,13 @@
 .main-content {
   margin-left: 200px;
   height: 100vh;
-  background: #F8F8F8;
+  background: #f8f8f8;
   transition: margin 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 .main-content-collapsed {
   margin-left: 64px;
-  background: #F8F8F8;
+  background: #f8f8f8;
   transition: margin 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
@@ -90,7 +92,7 @@
 
 .header {
   height: 64px;
-  background: #FFF;
+  background: #fff;
   padding: 0;
   position: relative;
   z-index: 100;
@@ -115,4 +117,3 @@
     text-align: right;
   }
 }
-

@@ -27,10 +27,6 @@ export default class HomePageContainer extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        1-2
-      </div>
-    );
+    return <div>1-2</div>;
   }
 }
