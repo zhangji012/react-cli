@@ -1,0 +1,22 @@
+
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es6",
+    "allowSyntheticDefaultImports": true, // 看下面  https://www.jianshu.com/p/71bbcdc8c1fc
+    "baseUrl": ".",      // 可以相对这个目录 import 文件   解析非相对模块名的基准目录
+    "sourceMap": true,    // 使 TypeScript 生成 sourcemaps
+    "removeComments": true,//编译 js 的时候，删除掉注释
+    "experimentalDecorators": true,//启用实验性的ES装饰器
+    "outDir": "ts-build", // 构建输出目录 (因为我们大部分时间都在使用 Webpack，所以不太相关)
+    "jsx": "preserve",
+    "strict": true,
+    "paths": {
+      "@/*": ["src/*"],
+    }
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
+

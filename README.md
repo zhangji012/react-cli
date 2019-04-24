@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/javaLuo/react-luo.svg?branch=master)](https://travis-ci.org/javaLuo/react-luo)
 [![codebeat badge](https://codebeat.co/badges/eb91ca34-7c1b-424f-be1c-a5d79fd3d269)](https://codebeat.co/projects/github-com-javaluo-react-luo-master)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 ## what is this?
@@ -12,44 +11,24 @@ react automaticaly<br/>
 标准的 React+Redux 分层结构<br/>
 经过了多个项目的实践，不停的更新和优化出来的。目前自己做项目也在用。
 
-- PWA、代码分割、HMR 热替换、dllPlugin 静态资源预编译、HappyPack 多线程构建、ES6+语法
+- PWA、Hooks、代码分割、热替换、dllPlugin 静态资源预编译、HappyPack 多线程构建、ES6+语法
 
 ## 注意的地方
 
-- antd3.8.4 以后，Icon 的使用方式发生了变化，以前的使用方式会打包进所有的 Icon 导致打包体积过大，参见<br/>https://github.com/ant-design/ant-design/issues/12011 (目前只使用 3.8.2)
-- babel-eslint9.0 对修饰器的格式化检测与 prettier 不符（目前只使用 8.x）
+- antd icon 打包体积过大：<a href="https://github.com/ant-design/ant-design/issues/12011" target="_blank">https://github.com/ant-design/ant-design/issues/12011</a>，开了 gzip 之后还行
 
 ## 构建 Start
-
-```
-npm install		# 安装依赖模块 | 1⃣️首先运行这个
-```
-
-```
-npm run start		# 包含(npm run dll)静态资源预编译 | 运行开发环境，默认监听8888端口
-```
-
-```
-npm run build		# 正式打包，用于生产环境
-```
-
-```
-npm run prettier	# 一键格式化src、mock目录下的所有.js/.css/.less文件
-```
-
-```
-npm run dist		# 运行正式打包后的最终文件（build目录下的文件），默认监听8888端
-npm run distmac	        # MAC下运行最终文件
-```
-
-## Yarn 构建
 
 ```
 yarn install		# 安装依赖模块
 ```
 
 ```
-yarn start		# 包含(npm run dll)静态资源预编译 |运行开发环境，默认监听8888端口
+yarn dll		# 静态资源预编译
+```
+
+```
+yarn start		# 运行开发环境，默认监听8888端口
 ```
 
 ```
@@ -67,9 +46,7 @@ yarn distmac	        # MAC下运行最终文件
 
 ## 更新日志 Update log
 
-- 2018-10-30
-  <br/>1.React16.6 增加了一个新的生命周期函数
-  <br/>2.React16.6 更新内容：https://zhuanlan.zhihu.com/p/47680420
+见<a href="https://github.com/javaLuo/react-luo/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97" target="_blank">Wiki</a>
 
 ## 目录结构 Structure
 
@@ -89,12 +66,14 @@ yarn distmac	        # MAC下运行最终文件
 │   ├── component                     # 所有的公共类UI组件
 │   ├── container                     # 所有的页面级容器组件
 |	├── ...
-|   	└── root			# 根页，里面配置了顶级的路由
+|   	└── router			# 根组件，里面配置了顶级的路由
 |   ├── models				# 模块（包含store数据/reducers/actions）
 │   ├── assets                          # 所有的图片、文件等静态资源
 │   ├── styles                          # 所有的样式文件
 │   ├── store                           # store数据中心
-│   ├── util                            # 自定义工具
+│   ├── root                            # 根页
+│   ├── store                           # store数据中心
+│   ├── util                            # 自定义工具
 │   ├── index.js                        # 项目入口JS
 │   └── index.html                      # 主页html文件,开发环境和生产打包共用
 ├── server.js				# 用于开发环境的服务部署
@@ -103,6 +82,9 @@ yarn distmac	        # MAC下运行最终文件
 └── webpack.production.config.js	# 用于生产环境正式打包的webpack配置
 ```
 
+## 预览地址 Demo
+
+https://isluo.com/work/pwa (线上没有 mock 环境)
 
 ## 参阅资料
 
