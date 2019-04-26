@@ -1,5 +1,15 @@
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "presets": [
+    "@babel/preset-env",
+    // {
+    //   "useBuiltIns": "entry",
+    //   "targets": {
+    //     "browsers": [ "ie >= 9", "chrome >= 62" ]
+    //   },
+    // },
+  
+    "@babel/preset-react",
+  ],
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-object-rest-spread",

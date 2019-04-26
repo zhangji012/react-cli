@@ -4,15 +4,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import tools from "@/util/tools";
-console.log(222222, tools);
+console.log(111111111, tools);
 
 /** 所需的各种资源 **/
 import "./index.less";
 
-function HomePageContainer(props:any) {
+function HomePageContainer(props) {
   return (
     <div className="page-home all_nowarp">
-      home
+      info
     </div>
   );
 }
