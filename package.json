@@ -61,6 +61,7 @@
     "babel-eslint": "10.x",
     "babel-loader": "^8.0.5",
     "babel-plugin-import": "^1.11.0",
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "clean-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^5.0.2",

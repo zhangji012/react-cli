@@ -1,19 +1,6 @@
 {
   "presets": [
     "@babel/preset-env",
-    // {                                   // 可以参考https://github.com/HeavenSky/react-antd-ie9
-    //   "useBuiltIns": "entry",
-    //   "targets": {
-    //     "browsers": [ "ie >= 9", "chrome >= 62" ]
-    //   },
-    // },
-    // "@babel/env",
-    // {
-    //   "targets": {
-    //     "ie": "9",
-    //   },
-    //   "useBuiltIns": "usage",
-    // },
     "@babel/preset-react",
   ],
   "plugins": [

@@ -1,8 +1,7 @@
 /** APP入口 **/
-// import "babel-polyfill";
+import "babel-polyfill";   // 兼容到ie9
 import React from "react";
 import ReactDOM from "react-dom";
-// todo  typescript的配置还有问题， yarn dll现在会报错
 import * as serviceWorker from "./serviceWorker";
 import Root from "./root";
 
