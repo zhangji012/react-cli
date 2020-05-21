@@ -47,7 +47,9 @@ yarn distmac	        # MAC下运行最终文件
 ## 更新日志 Update log
 
 见<a href="https://github.com/javaLuo/react-luo/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97" target="_blank">Wiki</a>
-
+## 添加
+1. ts有提示也可以运行
+2. ts中可以引入js
 ## 目录结构 Structure
 
 ```
