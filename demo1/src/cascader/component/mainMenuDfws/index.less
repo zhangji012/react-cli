@@ -1,0 +1,129 @@
+@import "../../basestyle.less";
+
+.ve-layer {
+  &-region {
+    padding: 16px 0 0 20px;
+    border-bottom: 1px solid #ECECEC;
+    margin-bottom: 16px;
+    &-list {
+      display: flex;
+      &-l {
+        flex-basis: 88px;
+        font-size:13px;
+        font-weight:bold;
+        color: #484848;
+        line-height:17px;
+      }
+      &-r {
+        flex: 1;
+        font-size:13px;
+        line-height:17px;
+        color: #333333;
+        &-item {
+          display: inline-block;
+          width: 70px;
+          padding-bottom: 20px;
+          position: relative;
+          span {
+            cursor: pointer;
+            &:hover {
+              color: @blue;
+            }
+          }
+       
+        }
+        .disabled {
+          color: #ccc;
+          span {
+            cursor:not-allowed;
+            &:hover {
+              color: #ccc !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-area {
+    padding: 0 0 0 20px;
+    display: flex;
+    &-l {
+      flex-basis: 88px;
+      font-size:13px;
+      font-weight:bold;
+      color: #484848;
+      line-height:17px;
+    }
+    &-r {
+      flex: 1;
+      font-size:13px;
+      line-height:17px;
+      color: #333333;
+      &-item {
+        display: inline-block;
+        width: 70px;
+        padding-bottom: 20px;
+        position: relative;
+        span {
+          cursor: pointer;
+          &:hover {
+            color: @blue;
+          }
+        }
+        &-arrow {
+          position: absolute;
+          top: 29px;
+          left: 5px;
+          width: 12px;
+          height: 12px;
+          z-index: 10;
+        }
+      }
+    }
+  }
+  &-third2 {
+    margin: 0 0 20px 0;
+    padding: 0 30px 0 108px;
+    &-box {
+      box-sizing: border-box;
+      border: 1px solid #8FCBFF;
+      border-radius: 2px;
+      background: #F7F8F9;
+      border-radius: 4px;
+      &-content {
+        padding: 18px 0 8px 18px;
+        padding-bottom: 8px;
+      }
+    }
+
+    &-item {
+      width: 63.5px;
+      height: 16px;
+      display: inline-block;
+      margin-bottom: 12px;
+      color: #555555;
+      font-size: 12px;
+      line-height: 16px;
+      cursor: pointer;
+    }
+    .disabled {
+      color: #ccc;
+      cursor:not-allowed;
+    }
+
+    .selected {
+      color: @blue;
+    }
+  }
+
+  .selected2 {
+    color: @blue;
+  }
+  .width55 {
+    width: 55px !important;
+  }
+  .paddingB16 {
+    padding-bottom: 16px !important;
+  }
+}
