@@ -1,9 +1,3 @@
-# React-Luo
-
-[![Build Status](https://travis-ci.org/javaLuo/react-luo.svg?branch=master)](https://travis-ci.org/javaLuo/react-luo)
-[![codebeat badge](https://codebeat.co/badges/eb91ca34-7c1b-424f-be1c-a5d79fd3d269)](https://codebeat.co/projects/github-com-javaluo-react-luo-master)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
 ## what is this?
 
 react automaticaly<br/>
@@ -84,9 +78,6 @@ yarn distmac	        # MAC下运行最终文件
 └── webpack.production.config.js	# 用于生产环境正式打包的webpack配置
 ```
 
-## 预览地址 Demo
-
-https://isluo.com/work/pwa (线上没有 mock 环境)
 
 ## 参阅资料
 

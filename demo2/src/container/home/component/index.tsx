@@ -4,20 +4,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import tools from "@/util/tools";
-import IconSearch from "../../assets/icon_search@2x.png";
-import CeshiTs from "./component/index";
+import IconSearch from "../../../assets/icon_search@2x.png";
+import IconSearch2 from "@/assets/icon_search@2x.png";
+
 
 console.log(222222, tools);
 
 /** 所需的各种资源 **/
 import "./index.less";
 
-function HomePageContainer(props) {
+function CeshiTs(props: any) {
   return (
     <div className="page-home all_nowarp">
-      home
+      测试Typescript使用
       <img src={IconSearch} />
-      <CeshiTs />
+      <img src={IconSearch2} />
     </div>
   );
 }
@@ -29,4 +30,4 @@ export default connect(
   dispatch => ({
     actions: {}
   })
-)(HomePageContainer);
+)(CeshiTs);

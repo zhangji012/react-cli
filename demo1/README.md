@@ -8,7 +8,7 @@
 ### upload props
 
 | 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
+| --- | ------------------------------ | --- | --- |
 | **data** | 数据源 | Array | [] |
 | **value** | 选中的id数组 | Array | - |
 | hotCityData | 热门成熟数据源 | Array | [] |
@@ -23,5 +23,6 @@
 | onCancel | 取消回调 | function | - |
 | onSelect | 选中回调 | function | - |
 
-
+### 使用antdesign的ts项目注意事项
+1. ant design提供的脚手架安装less时千万要安装老版本的
 
