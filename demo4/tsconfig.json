@@ -1,0 +1,44 @@
+
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es5",
+    "allowSyntheticDefaultImports": true, // 看下面  https://www.jianshu.com/p/71bbcdc8c1fc
+    "baseUrl": ".",      // 可以相对这个目录 import 文件   解析非相对模块名的基准目录
+    "sourceMap": true,    // 使 TypeScript 生成 sourcemaps
+    "removeComments": true,//编译 js 的时候，删除掉注释
+    "experimentalDecorators": true,//启用实验性的ES装饰器
+    "esModuleInterop": true, // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
+    "outDir": "ts-build", // 构建输出目录 (因为我们大部分时间都在使用 Webpack，所以不太相关)
+    "jsx": "react",
+    "strict": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "paths": {
+      "@/*": ["src/*"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "tslint:latest",
+    "tslint-config-prettier"
+  ]
+}
+
