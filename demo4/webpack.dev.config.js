@@ -38,12 +38,13 @@ module.exports = {
       // https://segmentfault.com/q/1010000017375193
       // https://segmentfault.com/a/1190000019983303
       // https://github.com/Brooooooklyn/ts-import-plugin
+      // 用awesome-typescript-loader 和 ts-loader都可以，但是推荐awesome-typescript-loader好一点
       {
         test: /\.(ts|tsx)$/,
         use: [
           "babel-loader",
           {
-            loader: "ts-loader", options: {
+            loader: "awesome-typescript-loader", options: {
               transpileOnly: true,
               getCustomTransformers: () => ({
                 before: [tsImportPluginFactory({
@@ -56,7 +57,22 @@ module.exports = {
                 module: 'es2015'
               }
             }
-          }
+          },
+          // {
+          //   loader: "ts-loader", options: {
+          //     transpileOnly: true,
+          //     getCustomTransformers: () => ({
+          //       before: [tsImportPluginFactory({
+          //         libraryName: 'antd',   // 引入库名称
+          //         libraryDirectory: 'lib',   // 来源,default: lib
+          //         style: true
+          //       })]
+          //     }),
+          //     compilerOptions: {
+          //       module: 'es2015'
+          //     }
+          //   }
+          // }
         ],
         exclude: [
           /node_modules/,
@@ -65,7 +81,7 @@ module.exports = {
       {
         // .js .jsx用babel解析
         test: /\.js?$/,
-        use: ["happypack/loader"],
+        use: ["babel-loader"],
         include: path.resolve(__dirname, "src")
       },
       {

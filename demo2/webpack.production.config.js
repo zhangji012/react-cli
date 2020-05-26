@@ -10,6 +10,8 @@ const FaviconsWebpackPlugin = require("favicons-webpack-plugin"); // 自动生�
 const CopyWebpackPlugin = require("copy-webpack-plugin"); // 复制文件用
 const TerserPlugin = require("terser-webpack-plugin"); // 优化js
 const webpackbar = require("webpackbar");
+const tsImportPluginFactory = require('ts-import-plugin') // ts中引入ant design
+
 /**
  * 基础路径
  * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://isluo.com/work/pwa/"
@@ -50,12 +52,48 @@ module.exports = {
       },
       {
         test: /\.(ts|tsx)$/,
-        use: ['babel-loader',"ts-loader"],
+        use: [
+          "babel-loader",
+          {
+            loader: "awesome-typescript-loader", options: {
+              transpileOnly: true,
+              getCustomTransformers: () => ({
+                before: [tsImportPluginFactory({
+                  libraryName: 'antd',   // 引入库名称
+                  libraryDirectory: 'lib',   // 来源,default: lib
+                  style: true
+                })]
+              }),
+              compilerOptions: {
+                module: 'es2015'
+              }
+            }
+          },
+          // {
+          //   loader: "ts-loader", options: {
+          //     transpileOnly: true,
+          //     getCustomTransformers: () => ({
+          //       before: [tsImportPluginFactory({
+          //         libraryName: 'antd',   // 引入库名称
+          //         libraryDirectory: 'lib',   // 来源,default: lib
+          //         // libraryDirectory: "es",
+          //         style: true
+          //       })]
+          //     }),
+          //     compilerOptions: {
+          //       module: 'es2015'
+          //     }
+          //   }
+          // }
+        ],
+        exclude: [
+          /node_modules/,
+        ]
       },
       {
         // .js .jsx用babel解析
         test: /\.js?$/,
-        use: ["happypack/loader"],
+        use: ["babel-loader"],
         include: path.resolve(__dirname, "src")
       },
       {

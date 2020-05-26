@@ -7,8 +7,9 @@ const HappyPack = require("happypack"); // 多线程编译
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const webpackbar = require("webpackbar");
 const OpenBrowserPlugin = require('open-browser-webpack-plugin') //自动打开浏览器
-
+const tsImportPluginFactory = require('ts-import-plugin') // ts中引入ant design
 const PUBLIC_PATH = "/"; // 基础路径
+
 module.exports = {
   mode: "development",
   entry: [
@@ -33,15 +34,55 @@ module.exports = {
         use: ["eslint-loader"],
         include: path.resolve(__dirname, "src")
       },
+        // 在ts项目中配置ant design
+      // https://segmentfault.com/q/1010000017375193
+      // https://segmentfault.com/a/1190000019983303
+      // https://github.com/Brooooooklyn/ts-import-plugin
+      // 用awesome-typescript-loader 和 ts-loader都可以，但是推荐awesome-typescript-loader好一点
       {
         test: /\.(ts|tsx)$/,
-        use: ['babel-loader', "ts-loader"],
+        use: [
+          "babel-loader",
+          {
+            loader: "awesome-typescript-loader", options: {
+              transpileOnly: true,
+              getCustomTransformers: () => ({
+                before: [tsImportPluginFactory({
+                  libraryName: 'antd',   // 引入库名称
+                  libraryDirectory: 'lib',   // 来源,default: lib
+                  style: true
+                })]
+              }),
+              compilerOptions: {
+                module: 'es2015'
+              }
+            }
+          },
+          // {
+          //   loader: "ts-loader", options: {
+          //     transpileOnly: true,
+          //     getCustomTransformers: () => ({
+          //       before: [tsImportPluginFactory({
+          //         libraryName: 'antd',   // 引入库名称
+          //         libraryDirectory: 'lib',   // 来源,default: lib
+          //         style: true
+          //       })]
+          //     }),
+          //     compilerOptions: {
+          //       module: 'es2015'
+          //     }
+          //   }
+          // }
+        ],
+        exclude: [
+          /node_modules/,
+        ]
       },
-      // todo awesome-typescript-loader 使用报错
+
       {
         // .js .jsx用babel解析
         test: /\.js?$/,
-        use: ["happypack/loader"],
+        use: ["babel-loader"],
         include: path.resolve(__dirname, "src")
       },
       {

@@ -13,7 +13,7 @@ export type State = {
   limit: number,
   selectVal: string[]
 }
-console.log(111111111111)
+
 class HomePageContainer extends React.Component<Props, State> {
   constructor(props: any) {
     super(props)

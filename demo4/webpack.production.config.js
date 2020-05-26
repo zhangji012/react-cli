@@ -21,7 +21,7 @@ module.exports = {
   entry: [path.resolve(__dirname, "src/component/cascader", "index")],
   output: {
     path: path.resolve(__dirname, "build"), // 将文件打包到此目录下
-    filename: 'bundle.js',
+    filename: 'index.js',
     // filename: "dist/[name].[chunkhash:8].js",
     // chunkFilename: "dist/[name].[chunkhash:8].chunk.js"
   },
@@ -51,7 +51,7 @@ module.exports = {
         use: [
           "babel-loader",
           {
-            loader: "ts-loader", options: {
+            loader: "awesome-typescript-loader", options: {
               transpileOnly: true,
               getCustomTransformers: () => ({
                 before: [tsImportPluginFactory({
@@ -64,7 +64,23 @@ module.exports = {
                 module: 'es2015'
               }
             }
-          }
+          },
+          // {
+          //   loader: "ts-loader", options: {
+          //     transpileOnly: true,
+          //     getCustomTransformers: () => ({
+          //       before: [tsImportPluginFactory({
+          //         libraryName: 'antd',   // 引入库名称
+          //         libraryDirectory: 'lib',   // 来源,default: lib
+          //         // libraryDirectory: "es",
+          //         style: true
+          //       })]
+          //     }),
+          //     compilerOptions: {
+          //       module: 'es2015'
+          //     }
+          //   }
+          // }
         ],
         exclude: [
           /node_modules/,
@@ -73,7 +89,7 @@ module.exports = {
       {
         // .js .jsx用babel解析
         test: /\.js?$/,
-        use: ["happypack/loader"],
+        use: ["babel-loader"],
         include: path.resolve(__dirname, "src")
       },
       {
