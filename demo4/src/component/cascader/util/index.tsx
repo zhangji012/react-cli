@@ -79,7 +79,6 @@ export const flatten = (arr: any, isExtraType: boolean) => {
     third: bySecondCode,
     searchData: searchData_N
   }
-  console.log(searchData_N);
   return obj
 }
 

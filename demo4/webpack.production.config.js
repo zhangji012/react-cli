@@ -1,51 +1,20 @@
-/** 这是用于生产环境的webpack配置文件 **/
-
-const path = require("path");
-const webpack = require("webpack"); // webpack核心
-const ExtractTextPlugin = require("extract-text-webpack-plugin"); // 为了单独打包css
+const path = require('path')
+const tsImportPluginFactory = require('ts-import-plugin') // ts中引入ant design
 const CleanWebpackPlugin = require("clean-webpack-plugin"); // 每次打包前清除旧的build文件夹
 const CopyWebpackPlugin = require("copy-webpack-plugin"); // 复制文件用
-const TerserPlugin = require("terser-webpack-plugin"); // 优化js
-const webpackbar = require("webpackbar");
-const tsImportPluginFactory = require('ts-import-plugin') // ts中引入ant design
-/**
- * 基础路径
- * 比如我上传到自己的服务器填写的是："/work/pwa/"，最终访问为"https://isluo.com/work/pwa/"
- * 根据你自己的需求填写
- * "/" 就是根路径，假如最终项目上线的地址为：https://isluo.com/， 那就可以直接写"/"
- * **/
-const PUBLIC_PATH = "/";
-// "@babel/polyfill", 
+
 module.exports = {
-  mode: "production",
-  entry: [path.resolve(__dirname, "src/component/cascader", "index")],
+  // libraryTarget 这个非常重要，之前这个没有注意  介绍 https://blog.csdn.net/frank_yll/article/details/78992778   将库的返回值分配给module.exports
+  mode: 'production',
+  entry: [path.resolve(__dirname, "src/component/cascader", "index.tsx")],
   output: {
-    path: path.resolve(__dirname, "build"), // 将文件打包到此目录下
     filename: 'index.js',
-    // filename: "dist/[name].[chunkhash:8].js",
-    // chunkFilename: "dist/[name].[chunkhash:8].chunk.js"
+    path: path.resolve(__dirname, "build"),
+    libraryTarget: 'commonjs2' 
   },
-  optimization: {
-    minimizer: [
-      new TerserPlugin({
-        parallel: true, // 多线程并行构建
-        terserOptions: {
-          output: {
-            comments: false // 不保留注释
-          }
-        }
-      })
-    ]
-  },
+
   module: {
     rules: [
-      {
-        // 编译前通过eslint检查代码 (注释掉即可取消eslint检测)
-        test: /\.(ts|tsx|js)?$/,
-        enforce: "pre",
-        use: ["eslint-loader"],
-        include: path.resolve(__dirname, "src")
-      },
       {
         test: /\.(ts|tsx)$/,
         use: [
@@ -65,52 +34,32 @@ module.exports = {
               }
             }
           },
-          // {
-          //   loader: "ts-loader", options: {
-          //     transpileOnly: true,
-          //     getCustomTransformers: () => ({
-          //       before: [tsImportPluginFactory({
-          //         libraryName: 'antd',   // 引入库名称
-          //         libraryDirectory: 'lib',   // 来源,default: lib
-          //         // libraryDirectory: "es",
-          //         style: true
-          //       })]
-          //     }),
-          //     compilerOptions: {
-          //       module: 'es2015'
-          //     }
-          //   }
-          // }
         ],
         exclude: [
           /node_modules/,
         ]
       },
-      {
-        // .js .jsx用babel解析
-        test: /\.js?$/,
-        use: ["babel-loader"],
-        include: path.resolve(__dirname, "src")
+      { 
+        test: /\.(js|jsx)?$/, 
+        exclude: /node_modules/,
+        use: ["babel-loader"]
       },
       {
-        // .css 解析
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: ["css-loader", "postcss-loader"]
-        })
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
       },
       {
-        // .less 解析
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: [
-            "css-loader",
-            "postcss-loader",
-            { loader: "less-loader", options: { javascriptEnabled: true } }
-          ]
-        })
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          { loader: "less-loader", options: { javascriptEnabled: true } }
+        ]
       },
       {
         // 文件解析
@@ -139,40 +88,34 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpackbar(),
-    /**
-     * 在window环境中注入全局变量
-     * 这里这么做是因为src/registerServiceWorker.js中有用到，为了配置PWA
-     * **/
-    new webpack.DefinePlugin({
-      "process.env": JSON.stringify({
-        PUBLIC_URL: PUBLIC_PATH.replace(/\/$/, "")
-      })
-    }),
-    /**
-     * 打包前删除上一次打包留下的旧代码（根据output.path）
-     * **/
     new CleanWebpackPlugin(),
-
-    /**
-     * 提取CSS等样式生成单独的CSS文件
-     * **/
-    new ExtractTextPlugin({
-      filename: "dist/[name].[chunkhash:8].css", // 生成的文件名
-      allChunks: true // 从所有chunk中提取
-    }),
-    /**
-     * 文件复制
-     * 这里是用于把manifest.json打包时复制到/build下 （PWA）
-     * **/
     new CopyWebpackPlugin([
-      { from: "./public/manifest.json", to: "./manifest.json" }
+      { from: "./index.d.ts", to: "./index.d.ts" }
     ]),
   ],
   resolve: {
     extensions: ['.tsx', '.ts',".js", ".jsx", ".less", ".css", ".wasm", ".json"], //后缀名自动补全
-    alias: {
-      "@": path.resolve(__dirname, "src")
+  },
+  externals: { // 打包到生产并发布到npm上需要开启，因为用到了react hooks，不然会因为有两个react副本而导致hooks报错
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react'
+    },
+    'react-dom': {
+      root: 'ReactDOM',
+      commonjs2: 'react-dom',
+      commonjs: 'react-dom',
+      amd: 'react-dom'
+    },
+    // todo,这个地方不懂，为什么antd没有被剔除出去，是不是应该antd已经按需加载了
+    antd: {
+      root: 'antd',
+      commonjs2: 'antd',
+      commonjs: 'antd',
+      amd: 'antd'
     }
-  }
+ 
+  },
 };

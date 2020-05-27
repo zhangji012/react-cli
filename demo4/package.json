@@ -1,24 +1,27 @@
 {
-  "name": "resume",
+  "name": "ve-pc-react-cascader-post",
   "version": "1.0.0",
-  "description": "最佳东方-简历PC",
-  "main": "index.js",
+  "description": "最佳东方 react 职位弹窗组件",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "dll": "webpack -p --config webpack.dll.config.js --progress --profile --colors",
     "start": "node server.js",
-    "build": "webpack -p --config webpack.production.config.js",
-    "dist": "set NODE_ENV=production&& node server.js",
-    "distmac": "export NODE_ENV=production&& node server.js",
-    "prettier": "prettier --write \"{src,mock}/**/*.{js,css,less}\"",
-    "cover": "./node_modules/.bin/istanbul cover _mocha",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "build:Component": "webpack -p --config webpack.production.config.js"
   },
   "author": "zhangji",
   "license": "ISC",
-  "private": true,
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://gitee.com/DongFangWangShengKaiFa/dfws-fed-component"
   },
+  "keywords": [
+    "ve",
+    "post",
+    "react"
+  ],
   "dependencies": {
     "@rematch/core": "^1.1.0",
     "antd": "^3.16.2",

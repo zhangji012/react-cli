@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getParentCode, sliceAddArr,sliceAddArr2, sliceAddArr3 } from '../../util/index'
+import { getParentCode, sliceAddArr,sliceAddArr2, sliceAddArr3 } from '../../util'
 import { message } from 'antd'
 import icon_new from '../../assets/new.png'
 import icon_minus_yellow from '../../assets/-@2x.png'

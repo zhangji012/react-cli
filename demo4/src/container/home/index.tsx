@@ -2,6 +2,12 @@ import React from 'react'
 import Cascader from '@/component/cascader/index'
 import jobAllData from './data/job.json'
 // import './index.less'
+// import Cascader1 from 've-pc-react-cascader-post'
+// import {VeHeader} from 'dfws-ve-pc-layouts'
+// console.log(1111111111111, Cascader1)
+// console.log(222222, VeHeader)
+
+
 
 const jobData = jobAllData.data.job
 
