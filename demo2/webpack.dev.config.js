@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"); // 动态生成html插
 const HappyPack = require("happypack"); // 多线程编译
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const webpackbar = require("webpackbar");
-const OpenBrowserPlugin = require('open-browser-webpack-plugin') //自动打开浏览器
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin') //自动打开浏览器
 const tsImportPluginFactory = require('ts-import-plugin') // ts中引入ant design
 const PUBLIC_PATH = "/"; // 基础路径
 
@@ -166,7 +166,7 @@ module.exports = {
         appleStartup: false
       }
     }),
-    new OpenBrowserPlugin({ url: 'http://localhost:8888' })
+    // new OpenBrowserPlugin({ url: 'http://localhost:8888' })
   ],
   resolve: {
     extensions: ['.tsx', '.ts', ".js", ".jsx", ".less", ".css", ".wasm"], //后缀名自动补全
