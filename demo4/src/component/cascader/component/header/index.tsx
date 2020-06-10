@@ -3,8 +3,7 @@ import { message } from 'antd'
 import icon_search from '../../assets/icon_search@2x.png'
 import icon_close from '../../assets/close@2x.png'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { addArr,sliceAddArr4, sliceAddArr5 } from '../../util'
-// import { debounce } from 'lodash'
+import { addArr, sliceAddArr4, sliceAddArr5, replaceArr } from '../../util'
 import classNames from 'classnames'
 import './index.less'
 
@@ -16,10 +15,12 @@ export type Props = {
   type: number,
   allow: any[],
   isSave: boolean,
+  language: number,
+  languageTxt: any,
   onSst: (arr: string[]) => void,
   onSelect?: (code: string) => void,
   onClose: () => void,
-  onSave: (arr: string[]) => void
+  onSave: (arr: string[]) => void,
 }
 
 function Header(props: Props) {
@@ -34,86 +35,88 @@ function Header(props: Props) {
     onSelect,
     onClose,
     isSave,
-    onSave
+    onSave,
+    language,
+    languageTxt
   } = props
   const [searchVal, setSearchVal] = useState('') // 搜索内容
   const [list, setList] = useState<any[]>([]) // 搜索内容
   const [isEdit, setIsEdit] = useState(false) // 当前是否在编辑状态
 
-  // 在react中的debounce书写方式 https://yq.aliyun.com/articles/757035
-  // todo 但是this在ts报错还不知道怎么解决, 还有如果用怎么用
-  // const useDebounce = (fn:any, delay:any, dep = []) => {
-  //   const {current} = useRef({fn, timer: null})
-  //   useEffect(() => {
-  //     current.fn = fn
-  //   }, [fn])
-  //   return useCallback(function f(...args) {
-  //     if (current.timer) {
-  //       clearTimeout(current.timer)
-  //     }
-  //     current.timer = setTimeout(() => {
-  //       current.fn.call(this, ...args)
-  //     }, delay)
-  //   }, dep)
-  // }
   const setListF = (searchVal: string) => {
+    const list = searchData.filter((item) => {
+      const val = item.value ? item.value.toLowerCase() : ''
+      return val.indexOf(searchVal) !== -1
+    })
     
-    const list = searchData.filter(
-      (item) => item.value.indexOf(searchVal) !== -1
-    )
     let list_N: any[] = []
-    if(searchVal) {
-      list.map((item) => {
+    if (searchVal) {
+      list.forEach((item) => {
         let isAllow = false
         allow.forEach((item2: string) => {
-          if(item2 === item.code) {
+          if (item2 === item.code) {
             isAllow = true
           }
         })
+
+        var reg = new RegExp(searchVal, 'ig')
+        var index = item.value.search(reg)
+        var len = searchVal.length
+        let title: string = item.value
+        if (index > -1) {
+          var word = item.value.substring(index, index + len)
+          title = item.value.substring(0, index) + `<span>${word}</span>` + item.value.substring(index + len, item.value.length)
+        }
+
         const obj = {
           ...item,
-          title: item.value.replace(searchVal, `<span>${searchVal}</span>`),
-          isAllow: isAllow
+          title: title,
+          isAllow: isAllow,
         }
         list_N.push(obj)
       })
     }
     setList(list_N)
   }
-  // const setListF_N = () => {
-  //   console.log(111111);
-  //   return debounce(setListF, 500)
-  // }
+
   const handleLiClick = (code: string, isAllow: boolean) => {
-    // const hasSome = allow.some((item: any) => item === code)
-    if(isAllow) {
+    if (isAllow) {
       onSelect && onSelect(code)
+      let selectedCodes_S = replaceArr(selectedCodes, code)
+
       if (limit === 1) {
-        if(isSave) {
-          const selectedCodes_N = sliceAddArr5(selectedCodes, code)
-          if(selectedCodes_N.length > 1) {
-            message.warning(`最多选择1个哦!`)
+        if (isSave) {
+          const selectedCodes_N = sliceAddArr5(selectedCodes_S, code)
+          if (selectedCodes_N.length > 1) {
+            if(language === 1) {
+              message.warning(`最多选择1个哦!`)
+            } else {
+              message.warning(`You can choose up to 1!`)
+            }
           } else {
             onSst(selectedCodes_N)
           }
         } else {
-          const selectedCodes_N = sliceAddArr4(selectedCodes, code)
+          const selectedCodes_N = sliceAddArr4(selectedCodes_S, code)
           onSst(selectedCodes_N)
-          if(selectedCodes_N.length) {
+          if (selectedCodes_N.length) {
             onSave(selectedCodes_N)
           }
         }
       } else {
-        const selectedCodes_N = addArr(selectedCodes, code, limit)
+        const selectedCodes_N = addArr(selectedCodes_S, code, limit)
         if (selectedCodes_N) {
           onSst(selectedCodes_N)
         } else {
-          message.warning(`最多选择 ${limit} 个哦!`)
+          if(language === 1) {
+            message.warning(`最多选择 ${limit} 个哦!`)
+          } else {
+            message.warning(`You can choose up to ${limit}!`)
+          }
         }
       }
       restData()
     }
- 
   }
   const restData = () => {
     setList([])
@@ -136,9 +139,6 @@ function Header(props: Props) {
                 className="search-name"
                 dangerouslySetInnerHTML={{ __html: item.title }}
               ></div>
-
-              <div className="search-path">{item.pathValue}</div>
-              <div className="search-border"></div>
             </li>
           )
         })}
@@ -148,26 +148,24 @@ function Header(props: Props) {
   const renderThumb = (obj: any) => {
     const { style, ...props } = obj
     const thumbStyle = {
-        backgroundColor: '#cccccc',
-        width: '4px',
-        borderRadius: '4px',
-        marginLeft: '3px'
-    };
-    return (
-      <div
-      style={{ ...style, ...thumbStyle }}
-      {...props}/>
-    );
+      backgroundColor: '#cccccc',
+      width: '4px',
+      borderRadius: '4px',
+      marginLeft: '3px',
+    }
+    return <div style={{ ...style, ...thumbStyle }} {...props} />
   }
   const ulRender = () => {
     if (list.length > 0 && list.length < 6) {
-      return <ul className="ve-layer-header-list">{liRender()}</ul>
+      return <ul className="vepcarea-layer-header-list">{liRender()}</ul>
     } else if (list.length > 5) {
       return (
-        <ul className="ve-layer-header-list">
-          <Scrollbars style={{ width: 248, height: 324 }} 
-          renderThumbVertical={renderThumb} autoHide
-        >
+        <ul className="vepcarea-layer-header-list">
+          <Scrollbars
+            style={{ width: 248, height: 288 }}
+            renderThumbVertical={renderThumb}
+            autoHide
+          >
             {liRender()}
           </Scrollbars>
         </ul>
@@ -181,9 +179,7 @@ function Header(props: Props) {
     setIsEdit(false)
   }
   const handleKeyDown = (e: any) => {
-    console.log(e);
     if (e.keyCode === 13) {
-      console.log(111111111111);
       setListF(searchVal)
     }
   }
@@ -193,20 +189,30 @@ function Header(props: Props) {
       window.removeEventListener('click', hideList, false)
     }
   }, [])
-   
+ const selectTxt = () => {
+   if(language === 1) {
+     return (<span className="vepcarea-layer-header-title_sub">
+        (您最多能选择<span>{limit}</span>项)
+      </span>)
+   } else {
+    return (<span className="vepcarea-layer-header-title_sub">
+    (You can choose up to<span>{limit}</span>)
+  </span>)
+   }
+ }
   return (
-    <div className={classNames('ve-layer-header clearfix', type === 2 && 'skin')}>
-      <div className="fl ve-layer-header-title">
+    <div
+      className={classNames('vepcarea-layer-header clearfix', type === 2 && 'skin')}
+    >
+      <div className="fl vepcarea-layer-header-title">
         <span>{title}</span>
-        <span className="ve-layer-header-title_sub">
-          (您最多能选择<span>{limit}</span>项)
-        </span>
+        {selectTxt()}
       </div>
       <div
         className={classNames(
           'fl',
-          've-layer-header-search',
-          isEdit && 've-layer-header-search_active'
+          'vepcarea-layer-header-search',
+          isEdit && 'vepcarea-layer-header-search_active'
         )}
         onClick={(e) => {
           e.stopPropagation()
@@ -217,8 +223,8 @@ function Header(props: Props) {
       >
         <input
           type="text"
-          placeholder="请输入职位关键词"
-          className="ve-layer-header-search_input"
+          placeholder={languageTxt.inputP}
+          className="vepcarea-layer-header-search_input"
           value={searchVal}
           onChange={(e) => {
             setSearchVal(e.target.value)
@@ -236,20 +242,17 @@ function Header(props: Props) {
             }
           }}
         />
-        <img
-          src={icon_search}
-          className="ve-layer-header-search_icon"
-          // onClick={setListF}
-        />
+        <img src={icon_search} className="vepcarea-layer-header-search_icon" alt="" />
         {ulRender()}
       </div>
       <img
         src={icon_close}
-        className="ve-layer-header-close fr"
+        className="vepcarea-layer-header-close fr"
         onClick={onClose}
         onMouseDown={(e) => {
           e.stopPropagation()
         }}
+        alt=""
       />
     </div>
   )

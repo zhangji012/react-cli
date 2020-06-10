@@ -1,15 +1,15 @@
 {
-  "name": "ve-pc-react-cascader-post",
-  "version": "1.0.0",
-  "description": "最佳东方 react 职位弹窗组件",
-  "main": "build/index.js",
+  "name": "ve-pc-react-cascader-area",
+  "version": "1.1.7",
+  "description": "最佳东方 react 地区弹窗组件",
+  "main": "dist/index.js",
   "files": [
-    "build"
+    "dist"
   ],
   "scripts": {
     "dll": "webpack -p --config webpack.dll.config.js --progress --profile --colors",
     "start": "node server.js",
-    "build:Component": "webpack -p --config webpack.production.config.js"
+    "build:component": "webpack -p --config webpack.production.config.js"
   },
   "author": "zhangji",
   "license": "ISC",
@@ -19,7 +19,7 @@
   },
   "keywords": [
     "ve",
-    "post",
+    "area",
     "react"
   ],
   "dependencies": {

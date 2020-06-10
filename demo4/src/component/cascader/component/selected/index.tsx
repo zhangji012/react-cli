@@ -8,23 +8,25 @@ export type Props = {
   selectedCodes: string[],
   searchData: any[],
   type: number,
+  languageTxt: any,
+  invalidIndex:number,
   onSst: (arr: string[]) => void
 }
 
 function Selected(props: Props) {
   const [showData, setShowData] = useState<any[]>([]) // 弹窗显示隐藏
-  const { selectedCodes, searchData, onSst, type } = props
+  const { selectedCodes, searchData, onSst, type, languageTxt, invalidIndex } = props
   useEffect(() => {
     let showData_N: any[] = []
-    selectedCodes.map((item1) => {
-      searchData.map((item2) => {
+    selectedCodes.forEach((item1) => {
+      searchData.forEach((item2) => {
         if (item1 === item2.code) {
           showData_N.push(item2)
         }
       })
     })
     setShowData(showData_N)
-  }, [selectedCodes.length, searchData.length])
+  }, [selectedCodes.length, searchData.length, invalidIndex])
 
   const handleRemoveCode = (code: string) => {
     let selectedCodes_N = [...selectedCodes]
@@ -36,14 +38,14 @@ function Selected(props: Props) {
   }
   const iocnPath = type === 1 ? icon_xz : icon_xz2
   return (
-    <div className="ve-layer-selected clearfix">
-      <span className="ve-layer-selected-left fl">已选职位</span>
-      <div className="ve-layer-selected-right fl">
+    <div className="vepcarea-layer-selected clearfix">
+      <span className="vepcarea-layer-selected-left">{languageTxt.selected}</span>
+      <div className="vepcarea-layer-selected-right">
         <div className="clearfix">
           {showData.map((item) => {
             return (
               <div
-                className="ve-layer-selected-right_item fl"
+                className="vepcarea-layer-selected-right_item fl"
                 key={item.code + item.value}
                 onClick={() => {
                   handleRemoveCode(item.code)

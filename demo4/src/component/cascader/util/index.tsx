@@ -2,43 +2,34 @@
  * 将职位原始数据整平
  * @param arr [Arrary]
  * @param isExtraType [bool]
+ * @param type [number] 
+ * @param hotCityData any[] 
+ * 
+ * 
  */
-export const flatten = (arr: any, isExtraType: boolean) => {
+export const flatten = (arr: any, isExtraType: boolean, type: number, hotCityData: any[]) => {
   const firstLayer = arr.filter((item: any) => {
     return item.parent_id === '0';
-  }).reverse();
-  const firstLayerCodes = firstLayer.map((item: any) => item.code)
-  
-  let byFirstCode = {}
-  let secondLayerCodes:any = []
-  firstLayerCodes.forEach((item1:any) => {
-    let item1Arr: any = []
-    arr.forEach((item2: any) => {
-      if(item1 === item2.parent_id) {
-        item1Arr.push(item2)
-        secondLayerCodes.push(item2.code)
-      }
-    })  
-    let obj1:any = {}
-    obj1[item1] = item1Arr.reverse()
-    byFirstCode = {...byFirstCode, ...obj1}
   })
+  const regionCodes = ["010000", "020000", "030000", "040000"]
+  const otherCodes = ["320000", "370000", "310000", "290000"]
 
-  let bySecondCode = {}
+  const firstLayerCodes = firstLayer.map((item: any) => item.code)
+  let byFirstCode = {}
   let searchData:any = []
 
-  secondLayerCodes.forEach((item1: any) => {
-    let item1Arr:any = []
-    arr.forEach((item2:any) => {
+  firstLayerCodes.forEach((item1:any) => {
+    let item1Arr: any = []
+    const hasRegion = regionCodes.some((itemCode:string) => itemCode === item1)
+    const hasOther = otherCodes.some((itemCode:string) => itemCode === item1)
+
+    arr.forEach((item2: any) => {
       if(item1 === item2.parent_id) {
         item1Arr.push(item2)
         searchData.push(item2)
       }
-
     })  
-    item1Arr = item1Arr.reverse()
-
-    if(isExtraType) {
+    if(hasRegion) {
       arr.forEach((item2: any) => {
         if(item1 === item2.code) {
           item1Arr.unshift(item2)
@@ -46,40 +37,140 @@ export const flatten = (arr: any, isExtraType: boolean) => {
         }
       })
     }
+
+    if(isExtraType && !hasRegion && !hasOther) {
+      arr.forEach((item2: any) => {
+        if(item1 === item2.code) {
+          item1Arr.unshift(item2)
+          searchData.push(item2)
+        }
+      })
+    }
+  
+
     let obj1:any = {}
     obj1[item1] = item1Arr
-    bySecondCode = {...bySecondCode, ...obj1}
+    byFirstCode = {...byFirstCode, ...obj1}
   })
+  
+  if(type === 1) {
+    hotCityData.forEach((item1: any) => {
+      searchData.push(item1)
+      // const hasSome = searchData.some((item2:any) => item1.code === item2.code)
+      // if(!hasSome) {
+      //   searchData_N.push(item1)
+      // }
+    })
+  }
+  // if(type === 2) {
+ 
+  // }
+  regionCodes.forEach((item1: any) => {
+    const addCode = arr.filter((item2: any) => item1 === item2.code)
+    searchData = [...searchData, ...addCode]
+  })
+
+  let searchCodes = searchData.map((item: any) => item.code)
+  searchCodes = Array.from(new Set(searchCodes));  //用结构的方法在ts里报错
 
   let searchData_N:any = []
-  searchData.forEach((item:any) => {
-    const firstCode = item.code.substr(0, 2) + '0000'
-    const secondCode = item.code.substr(0, 4) + '00'
-    let firstValue = ''
-    let secondValue = ''
-
-    arr.forEach((item2:any) => {
-      if(firstCode === item2.code) {
-        firstValue = item2.value
-      }
-      if(secondCode === item2.code) {
-        secondValue = item2.value
+  searchCodes.forEach((item1:any) => {
+    let hasSome = false
+    searchData.forEach((item2:any) => {
+      if(item1 === item2.code && !hasSome) {
+        hasSome = true
+        searchData_N.push(item2)
       }
     })
-    const objPath = {
-      pathValue: `${firstValue}-${secondValue}-${item.value}`
-    }
-    const item_N = {...item, ...objPath}
-    searchData_N.push(item_N)
   })
-
-  let obj = {
-    first: firstLayer,
-    second: byFirstCode,
-    third: bySecondCode,
+ 
+  const obj = {
+    firstAllData: firstLayer,
+    byFirstCode: byFirstCode,
     searchData: searchData_N
   }
   return obj
+}
+
+/**
+ * 将按照拼音整平
+ * @param arr [Arrary]
+ * @param hasQuanguo boolean
+ * 
+ */
+// const guowai = ['320000', '370000']
+export const flattenPinyin = (arr: any, hasQuanguo: boolean) => {
+  const pinyin = [
+    {
+      name: 'A-G',
+      // data: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+      data: ['350000', '310000', '010000', '040000', '090000', '360000', '070000', '220000', '110000', '320000'],
+      value:[]
+    }, {
+      name: 'H-J',
+      // data: ['H', 'I', 'J'],
+      data: ['230000', '120000', '130000', '240000', '300000', '080000', '140000', '060000', '150000'],
+      value:[]
+    }, {
+      name: 'K-S',
+      // data: ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'],
+      data: hasQuanguo ? ['160000', '280000', '250000', '170000', '370000', '180000', '190000', '200000', '030000', '100000'] : ['160000', '280000', '250000', '170000', '180000', '190000', '200000', '030000', '100000'],
+      value:[]
+    }, {
+      name: 'T-Z',
+      // data: ['T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+      data: ['330000', '020000', '270000', '290000', '260000', '210000', '050000'],
+      value:[]
+    }
+  ]
+  pinyin.forEach((item1: any) => {
+    let areaArr: any[] = []
+    const data = item1.data
+    data.forEach((item2: string) => {
+      arr.forEach((item3: any) => {
+        const firstLetter = item3['code']
+        if(item2 === firstLetter) {
+          areaArr.push(item3)
+        }
+      })
+    })
+    item1.value = areaArr
+  })
+  return pinyin
+}
+/**
+ * 将按照地区整平
+ * @param arr [Arrary]
+ */
+export const flattenRegion = (arr: any) => {
+  const region = [
+    {
+      name: '华北-东北',
+      data: ["010000", "020000", "161300", "160100", "240200", "140100", "120100"]
+    }, {
+      name: '华东地区',
+      data: ["030000", "050100", "050200", "061100", "060900", "060100", "350100"]
+    }, {
+      name: '华南-华中',
+      data: ["070100", "070200", "070500", "071900", "230100", "300100", "080100"]
+    }, {
+      name: '西北-西南',
+      data: ["040000", "200100", "100100", "210100"]
+    }
+  ]
+  region.forEach((item1: any) => {
+    let areaArr: any[] = []
+    const data = item1.data
+    data.forEach((item2: string) => {
+      arr.forEach((item3: any) => {
+        if(item2 === item3.code) {
+          areaArr.push(item3)
+        }
+      })
+    })
+    item1.value = areaArr
+  })
+  return region
 }
 
 /**
@@ -125,7 +216,6 @@ export const sliceAddArr = (arr: string[], code: string, limt: number) => {
     return arr_N
   }
 }
-
 /**
  * 数组内有相同元素删除，没有替换
  * @param arr [string]
@@ -183,7 +273,6 @@ export const sliceAddArr5 = (arr: string[], code: string) => {
     return [...arr, code]
   }
 }
-
 /**
  * 数组内有相同元素不操作，没有添加，limt限制，添加后超出返回false
  * @param arr [string]
@@ -207,16 +296,38 @@ export const addArr = (arr: string[], code: string, limt: number) => {
   }
 }
 
-// 防抖（debounce） 非立即执行版：
-// export const debounce = (func: any, wait: any) => {
-//   let timeout:any;
-//   return function () {
-//       let context = this;
-//       let args = arguments;
-//       if (timeout) clearTimeout(timeout);
-//       timeout = setTimeout(() => {
-//           func.apply(context, args)
-//       }, wait);
-//   }
-// }
+/**
+ * 数组内数据过滤， 如北京 和北京下的区不可以同时存在
+ * @param selectedCodes [string]
+ * @param code [string]
+ * 
+ */
+export const replaceArr = (selectedCodes: string[], code: string) => {
+  let selectedCodes_S = [...selectedCodes]
+  const str = code.substr(0,2)
+  if(code.indexOf('0000') !== -1) {
+    selectedCodes_S = selectedCodes_S.filter((item:any) => {
+      if(item.indexOf('0000') !== -1) {
+        return item
+      } else {
+        const str_item = item.substr(0,2)
+        if(str !== str_item) {
+          return item
+        }
+      }
+    })
+  } else {
+    selectedCodes_S = selectedCodes_S.filter((item:any) => {
+      if(item.indexOf('0000') === -1) {
+        return item
+      } else {
+        const str_item = item.substr(0,2)
+        if(str !== str_item) {
+          return item
+        }
+      }
+    })
+  }
+  return selectedCodes_S
+}
 

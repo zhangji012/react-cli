@@ -1,0 +1,128 @@
+@import '../../basestyle.less';
+
+.ve-layer {
+  &-region {
+    padding: 16px 0 0 20px;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 16px;
+    &-list {
+      display: flex;
+      &-l {
+        flex-basis: 88px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #484848;
+        line-height: 17px;
+      }
+      &-r {
+        flex: 1;
+        font-size: 13px;
+        line-height: 17px;
+        color: #333333;
+        &-item {
+          display: inline-block;
+          width: 70px;
+          padding-bottom: 18px;
+          position: relative;
+          cursor: pointer;
+          -moz-user-select:none;
+          -ms-user-select:none;
+          user-select:none;
+          &:hover {
+            color: @blue;
+          }
+        }
+        .disabled {
+          color: #ccc;
+          cursor: not-allowed;
+          &:hover {
+            color: #ccc !important;
+          }
+        }
+      }
+    }
+  }
+
+  &-area {
+    padding: 0 0 0 20px;
+    display: flex;
+    &-l {
+      flex-basis: 88px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #484848;
+      line-height: 17px;
+    }
+    &-r {
+      flex: 1;
+      font-size: 13px;
+      line-height: 17px;
+      color: #333333;
+      &-item {
+        display: inline-block;
+        width: 70px;
+        padding-bottom: 18px;
+        position: relative;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+        cursor: pointer;
+        &:hover {
+          color: @blue;
+        }
+    
+        &-arrow {
+          position: absolute;
+          top: 23px;
+          left: 5px;
+          width: 12px;
+          height: 12px;
+          z-index: 10;
+        }
+      }
+    }
+  }
+  &-third2 {
+    margin: -4px 0 12px 0;
+    padding: 0 30px 0 108px;
+    &-box {
+      box-sizing: border-box;
+      border: 1px solid #8fcbff;
+      border-radius: 2px;
+      background: #f7f8f9;
+      border-radius: 4px;
+      &-content {
+        padding: 14px 0 4px 18px;
+      }
+    }
+
+    &-item {
+      width: 63.5px;
+      height: 16px;
+      display: inline-block;
+      margin-bottom: 12px;
+      color: #555555;
+      font-size: 12px;
+      line-height: 16px;
+      cursor: pointer;
+    }
+    .disabled {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .selected {
+      color: @blue;
+    }
+  }
+
+  .selected2 {
+    color: @blue;
+  }
+  .width55 {
+    width: 55px !important;
+  }
+  .paddingB16 {
+    padding-bottom: 16px !important;
+  }
+}

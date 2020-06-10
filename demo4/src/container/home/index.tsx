@@ -1,35 +1,29 @@
 import React from 'react'
 import Cascader from '@/component/cascader/index'
-import jobAllData from './data/job.json'
+import areaAllData from './data/area.json'
 // import './index.less'
-// import Cascader1 from 've-pc-react-cascader-post'
-// import {VeHeader} from 'dfws-ve-pc-layouts'
-// console.log(1111111111111, Cascader1)
-// console.log(222222, VeHeader)
 
-
-
-const jobData = jobAllData.data.job
+const jobData = areaAllData.data
+const hotCityData = jobData['hot-city']
+const allAreaData = jobData['area']
 
 /** 所需的各种资源 **/
 export type Props = {}
 
 export type State = {
   modal1: boolean,
-  limit: number,
   selectVal: string[]
 }
-
+// console.log(jobData)
 class HomePageContainer extends React.Component<Props, State> {
   constructor(props: any) {
     super(props)
     this.state = {
       modal1: true,
-      limit: 5,
       selectVal: [],
     }
   }
-  // '010401', '020101', '010901', '060101'  餐饮总监
+  // '010000', '040700'
   handleCloseModal = () => {
     this.setState({
       modal1: false,
@@ -38,44 +32,48 @@ class HomePageContainer extends React.Component<Props, State> {
 
   render() {
     const { modal1 } = this.state
-
+ 
     return (
       <div className="page-home">
         {modal1 ? (
           <Cascader
-            data={jobData}
+            data={allAreaData}
+            hotCityData={hotCityData}
             value={this.state.selectVal}
-            limit={this.state.limit}
+            limit={1}
             isExtraType={false}
-            isIcon={false}
             isSave={false}
             type={1}
-            // allow={['010908', '010907', '010906', '010111']}
-            title="请选择职位"
-            onSave={(data: string[]) => {
-              console.log('保存', data)
+            // allow={['010000', '040700']}
+            title="请选择职位1"
+            // hasHotNational={true}
+            // hasQuanguo={true}
+            language={1}
+            onSave={(arrCodes: string[], arrObj: any[]) => {
+              console.log('保存', arrCodes, arrObj);
               this.setState({
-                selectVal: data,
+                selectVal: arrCodes,
               })
               this.handleCloseModal()
             }}
-            onCancel={() => {
+            onCancel={(str?: string) => {
               this.handleCloseModal()
-              console.log('取消')
+              console.log('取消', str)
             }}
-            onSelect={(code: string) => {
-              console.log('选中回调', code)
+            onSelect={(codeStr: string, codeObj: object) => {
+              console.log('选中回调', codeStr, codeObj)
             }}
           ></Cascader>
         ) : null}
         <button
           onClick={() => {
+            console.log(33);
             this.setState({
               modal1: true,
             })
           }}
         >
-          显示
+          显示地区
         </button>
       </div>
     )

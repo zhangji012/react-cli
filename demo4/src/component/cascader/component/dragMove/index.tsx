@@ -31,7 +31,6 @@ function DragMove(props: IProps) {
       event.preventDefault()
       let x = event.pageX - distenceX
       let y = event.pageY - distenceY
-
       if (x < 0) {
         x = 0
       } else if (x > clientWidth - modalW) {
@@ -52,7 +51,7 @@ function DragMove(props: IProps) {
     }
   }
 
-  const offSet = () => {
+  const setOffSet = () => {
     const pageW = document.documentElement.clientWidth
     const pageH = document.documentElement.clientHeight
     var x = (pageW - modalW) / 2
@@ -65,12 +64,12 @@ function DragMove(props: IProps) {
       })
   }
   useEffect(() => {
-    offSet()
-  }, [modalH])
+    setOffSet()
+  }, [])
   useEffect(() => {
-    window.addEventListener('resize', offSet, false) // 默认冒泡
+    window.addEventListener('resize', setOffSet, false) // 默认冒泡
     return () => {
-      window.removeEventListener('resize', offSet, false)
+      window.removeEventListener('resize', setOffSet, false)
     }
   }, [])
 

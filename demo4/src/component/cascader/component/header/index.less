@@ -1,144 +1,124 @@
 @import "../../basestyle.less";
-.ve-layer {
-  &-header {
-    height: 66px;
-    padding: 0 20px;
-    &-title {
-      color: #333333;
-      line-height: 65px;
-      font-size: 14px;
-      padding-right: 44px;
-      &_sub {
-        font-size: 12px;
-        color: #8C8C8C;
-        padding-left: 3px;
+.vepcarea {
+  .vepcarea-layer {
+    &-header {
+      height: 66px;
+      padding: 0 20px;
+      &-title {
+        color: #333333;
+        line-height: 65px;
+        font-size: 14px;
+        padding-right: 44px;
+        &_sub {
+          font-size: 12px;
+          color: #8C8C8C;
+          padding-left: 3px;
+        }
       }
-    }
-    &-search {
-      width: 248px;
-      height: 30px;
-      margin-top: 18px;
-      border-radius: 4px;
-      border: 1px solid #D9D9D9;
-      position: relative;
-      background: #ffffff;
-      box-sizing: content-box !important;
-      cursor: default;
-      &_active {
-        border-color: @yellow;
-
-      }
-      &_input {
-        height: 30px;
-        width: 200px;
-        line-height: 30px;
-        border: none;
-        margin-left: 10px;
-      }
-
-      &_icon {
-        width: 16px;
-        height: 16px;
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        margin-top: -8px;
-        cursor: pointer;
-      }
-     
-    }
-    &-close {
-      width: 20px;
-      height: 20px;
-      margin-top: 24px;
-      cursor: pointer;
-      position: absolute;
-      right: 20px;
-    }
-    &-list {
-      width: 248px;
-      // max-height: 270px;
-      position: absolute;
-      left: 0;
-      top: 35px;
-      box-shadow:0px 2px 10px 0px rgba(42,50,96,0.2);
-      border-radius: 4px;
-      z-index: 12;
-      background: #fff;
-      li {
+      &-search {
         width: 248px;
-        height: 54px;
-        padding: 9px 16px;
-        padding-bottom: 0;
-        box-sizing: border-box;
+        height: 30px;
+        margin-top: 18px;
+        border-radius: 4px;
+        border: 1px solid #D9D9D9;
+        position: relative;
+        background: #ffffff;
+        box-sizing: content-box !important;
+        cursor: default;
+        text-align: left;
+        &_active {
+          border-color: @yellow;
+  
+        }
+        &_input {
+          height: 30px;
+          width: 200px;
+          line-height: 30px;
+          border: none;
+          margin-left: 10px;
+        }
+  
+        &_icon {
+          width: 16px;
+          height: 16px;
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          margin-top: -8px;
+          cursor: pointer;
+        }
+       
+      }
+      &-close {
+        width: 20px;
+        height: 20px;
+        margin-top: 24px;
         cursor: pointer;
-        .search-name {
-          font-size: 13px;
-          color: #333333;
-          line-height: 17px;
-          height: 17px;
-          span {
+        position: absolute;
+        right: 20px;
+      }
+      &-list {
+        width: 248px;
+        // max-height: 270px;
+        position: absolute;
+        left: 0;
+        top: 35px;
+        box-shadow:0px 2px 10px 0px rgba(42,50,96,0.2);
+        border-radius: 4px;
+        z-index: 12;
+        background: #fff;
+        li {
+          width: 248px;
+          height: 36px;
+          line-height: 36px;
+          padding-left: 16px;
+          padding-bottom: 0;
+          box-sizing: border-box;
+          cursor: pointer;
+          .search-name {
+            font-size: 13px;
+            color: #333333;
+            span {
+              color: @yellow;
+            }
+          }
+        }
+  
+        li:hover {
+          background: #FFF5F1;
+          .search-name {
             color: @yellow;
           }
+  
+        
         }
-        .search-path {
-          color: #8c8c8c;
-          font-size: 12px;
-          line-height: 16px;
-          padding-bottom: 0px;
-          height: 16px;
-          margin-top: 2px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          word-break: break-all;
-        }
-
-        .search-border {
-          border-bottom: 1px dashed #E1E1E1;
-          height: 10px;
-        }
-      }
-
-      li:hover {
-        background: #FFF5F1;
-
-        .search-name {
-          color: @yellow;
-        }
-
-        .search-path {
-          border: 0;
-          color: #585858;
-        }
-      }
-
-      li.disabled {
-        .search-name {
-          color: #ccc !important;
-
-          span {
+  
+        li.disabled {
+          .search-name {
             color: #ccc !important;
+  
+            span {
+              color: #ccc !important;
+            }
           }
-        }
-
-        .search-path {
-          color: #ccc !important;
+  
+          
         }
       }
-    }
-   
-  }  
-  .skin {
-    .ve-layer-header-search_active {
-      border-color: @blue !important;
-    }
-    .ve-layer-header-list li .search-name span, .ve-layer-header-list li:hover .search-name {
-      color: @blue;
-    }
-    .ve-layer-header-list li:hover {
-      background-color: #F3F9FF;
-      
+     
+    }  
+    .skin {
+      .vepcarea-layer-header-search_active {
+        border-color: @blue !important;
+      }
+      .vepcarea-layer-header-list li .search-name span, .vepcarea-layer-header-list li:hover .search-name {
+        color: @blue;
+      }
+      .vepcarea-layer-header-list li:hover {
+        background-color: #F3F9FF;
+        
+      }
     }
   }
 }
+

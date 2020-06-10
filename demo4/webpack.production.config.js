@@ -9,7 +9,7 @@ module.exports = {
   entry: [path.resolve(__dirname, "src/component/cascader", "index.tsx")],
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "dist"),
     libraryTarget: 'commonjs2' 
   },
 
@@ -109,7 +109,7 @@ module.exports = {
       commonjs: 'react-dom',
       amd: 'react-dom'
     },
-    // todo,这个地方不懂，为什么antd没有被剔除出去，是不是应该antd已经按需加载了
+    // todo,这个地方不懂，为什么antd没有被剔除出去
     antd: {
       root: 'antd',
       commonjs2: 'antd',

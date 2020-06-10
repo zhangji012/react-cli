@@ -165,7 +165,7 @@ module.exports = {
         appleStartup: false
       }
     }),
-    new OpenBrowserPlugin({ url: 'http://localhost:8888' })
+    // new OpenBrowserPlugin({ url: 'http://localhost:8888' })
   ],
   resolve: {
     extensions: ['.tsx', '.ts', ".js", ".jsx", ".less", ".css", ".wasm", ".json"], //后缀名自动补全
